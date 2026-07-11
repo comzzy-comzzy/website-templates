@@ -117,7 +117,6 @@ function getTemplateHtml(category, title, font, layoutVariant) {
   let heroSection = "";
   let contentSections = "";
 
-  // Dynamic Navigation Links
   switch (category) {
     case "Agency":
     case "Consulting":
@@ -135,9 +134,7 @@ function getTemplateHtml(category, title, font, layoutVariant) {
       navLinks = `<li><a href="#overview">Overview</a></li><li><a href="#details">Details</a></li><li><a href="#contact">Contact</a></li>`;
   }
 
-  // Define structured layout variations (0: Centered Classic, 1: Split Screen, 2: Sidebar, 3: Asymmetric, 4: Dashboard/App)
   if (layoutVariant === 0) {
-    // --- Layout 0: Centered Classic ---
     heroSection = `
     <section class="hero layout-centered">
       <div class="wrap">
@@ -173,7 +170,6 @@ function getTemplateHtml(category, title, font, layoutVariant) {
     </section>`;
 
   } else if (layoutVariant === 1) {
-    // --- Layout 1: Split Screen Modern ---
     heroSection = `
     <section class="hero layout-split">
       <div class="wrap split-container">
@@ -213,8 +209,6 @@ function getTemplateHtml(category, title, font, layoutVariant) {
     </section>`;
 
   } else if (layoutVariant === 2) {
-    // --- Layout 2: Left Sidebar Navigation ---
-    // Note: The structure of Header and Main changes completely for Sidebar!
     heroSection = `
     <section class="hero layout-sidebar-hero">
       <div class="badge">Vertical Panel Edition</div>
@@ -235,7 +229,6 @@ function getTemplateHtml(category, title, font, layoutVariant) {
     </section>`;
 
   } else if (layoutVariant === 3) {
-    // --- Layout 3: Asymmetric Editorial ---
     heroSection = `
     <section class="hero layout-asymmetric">
       <div class="wrap">
@@ -272,7 +265,6 @@ function getTemplateHtml(category, title, font, layoutVariant) {
     </section>`;
 
   } else if (layoutVariant === 4) {
-    // --- Layout 4: Dashboard / Modern App Style ---
     heroSection = `
     <section class="hero layout-dashboard-hero">
       <div class="wrap">
@@ -319,9 +311,7 @@ function getTemplateHtml(category, title, font, layoutVariant) {
     </section>`;
   }
 
-  // Assemble HTML
   if (layoutVariant === 2) {
-    // Sidebar layout has different outer structure
     return `<!doctype html>
 <html lang="en">
 <head>
@@ -350,7 +340,6 @@ ${font.import}
 </body>
 </html>`;
   } else if (layoutVariant === 4) {
-    // Floating Nav Layout
     return `<!doctype html>
 <html lang="en">
 <head>
@@ -384,7 +373,6 @@ ${font.import}
 </body>
 </html>`;
   } else {
-    // Standard and Split layouts
     return `<!doctype html>
 <html lang="en">
 <head>
@@ -421,7 +409,10 @@ ${font.import}
 }
 
 // Generate the specific CSS variables and layout styling rules
-function getTemplateCss(style, font, palette, layoutVariant) {
+function getTemplateCss(style, font, palette, layoutVariant, index) {
+  const btnSubVariant = index % 3;
+  const cardSubVariant = (index + 1) % 3;
+
   let css = `:root {
   --bg: ${palette.bg};
   --surface: ${palette.surface};
@@ -456,9 +447,12 @@ p { color: var(--muted); }
 .heading p { color: var(--muted); }
 `;
 
-  // Standard elements styling depending on visual design system (Brutalist, Glassmorphism, etc.)
   if (style === "neo-brutalist") {
-    css += `
+    let btnCss = "";
+    let cardCss = "";
+
+    if (btnSubVariant === 0) {
+      btnCss = `
 .btn {
   display: inline-block;
   padding: 12px 24px;
@@ -479,27 +473,108 @@ p { color: var(--muted); }
   background: var(--surface);
   color: var(--text);
 }
-.badge {
-  background: var(--accent2);
+`;
+    } else if (btnSubVariant === 1) {
+      btnCss = `
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  background: var(--surface);
   color: var(--text);
-  border: 2px solid var(--text);
-  font-weight: 700;
+  text-decoration: none;
+  font-weight: 900;
+  border: 4px solid var(--text);
+  border-radius: 12px;
+  box-shadow: 5px 5px 0 var(--accent);
+  transition: all 0.1s ease;
   text-transform: uppercase;
 }
+.btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--accent);
+}
+.btn.secondary {
+  background: var(--accent2);
+  color: var(--text);
+}
+`;
+    } else {
+      btnCss = `
+.btn {
+  display: inline-block;
+  padding: 10px 22px;
+  background: var(--text);
+  color: var(--bg);
+  text-decoration: none;
+  font-weight: 700;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+  box-shadow: -4px 4px 0 var(--accent2);
+  transition: all 0.2s ease;
+}
+.btn:hover {
+  transform: translate(2px, -2px);
+  box-shadow: -6px 6px 0 var(--accent2);
+}
+.btn.secondary {
+  background: var(--accent);
+  color: #fff;
+}
+`;
+    }
+
+    if (cardSubVariant === 0) {
+      cardCss = `
 .card-item {
   background: var(--surface);
   border: 3px solid var(--text);
   padding: 28px;
   box-shadow: 4px 4px 0 var(--text);
 }
+`;
+    } else if (cardSubVariant === 1) {
+      cardCss = `
+.card-item {
+  background: var(--surface);
+  border: 3px dashed var(--text);
+  padding: 24px;
+  box-shadow: 6px 6px 0 var(--accent2);
+}
+`;
+    } else {
+      cardCss = `
+.card-item {
+  background: var(--surface);
+  border: 4px double var(--text);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 6px 6px 0 var(--accent);
+}
+`;
+    }
+
+    css += btnCss + cardCss + `
+.badge {
+  background: var(--accent2);
+  color: var(--text);
+  border: 2px solid var(--text);
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 0px;
+}
 .card-item h3 { font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase; }
 .media-placeholder, .media-placeholder-wide, .media-box-fill, .img-box {
   background: var(--accent2);
   border: 3px solid var(--text);
+  border-radius: 0px;
 }
 `;
   } else if (style === "glassmorphism") {
-    css += `
+    let btnCss = "";
+    let cardCss = "";
+
+    if (btnSubVariant === 0) {
+      btnCss = `
 .btn {
   display: inline-block;
   padding: 10px 22px;
@@ -518,11 +593,63 @@ p { color: var(--muted); }
   color: var(--text);
   border: 1px solid var(--border);
 }
-.badge {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: var(--accent);
+`;
+    } else if (btnSubVariant === 1) {
+      btnCss = `
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: 1px dashed var(--accent);
+  transition: all 0.3s;
 }
+.btn:hover {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+.btn.secondary {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+`;
+    } else {
+      btnCss = `
+.btn {
+  display: inline-block;
+  padding: 11px 26px;
+  border-radius: 16px 0px;
+  background: linear-gradient(160deg, rgba(var(--accent), 0.1), rgba(var(--accent2), 0.2));
+  border: 1.5px solid var(--accent2);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.btn:hover {
+  border-radius: 0px 16px;
+  background: var(--accent2);
+  color: #fff;
+}
+.btn.secondary {
+  background: rgba(0,0,0,0.2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+`;
+    }
+
+    if (cardSubVariant === 0) {
+      cardCss = `
 .card-item {
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(10px);
@@ -536,6 +663,35 @@ p { color: var(--muted); }
   transform: translateY(-4px);
   border-color: var(--accent);
 }
+`;
+    } else if (cardSubVariant === 1) {
+      cardCss = `
+.card-item {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.02);
+  border-radius: 4px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+`;
+    } else {
+      cardCss = `
+.card-item {
+  background: linear-gradient(185deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 36px;
+}
+`;
+    }
+
+    css += btnCss + cardCss + `
+.badge {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--accent);
+}
 .media-placeholder, .media-placeholder-wide, .media-box-fill, .img-box {
   background: linear-gradient(160deg, var(--accent), var(--accent2));
   border-radius: 12px;
@@ -543,7 +699,11 @@ p { color: var(--muted); }
 }
 `;
   } else if (style === "clean-premium") {
-    css += `
+    let btnCss = "";
+    let cardCss = "";
+
+    if (btnSubVariant === 0) {
+      btnCss = `
 .btn {
   display: inline-block;
   padding: 11px 22px;
@@ -564,11 +724,56 @@ p { color: var(--muted); }
   color: var(--text);
   border: 1px solid var(--border);
 }
-.badge {
-  background: rgba(var(--accent), 0.1);
+`;
+    } else if (btnSubVariant === 1) {
+      btnCss = `
+.btn {
+  display: inline-block;
+  padding: 12px 26px;
+  border-radius: 50px;
+  background: transparent;
   color: var(--accent);
-  border: 1px solid var(--border);
+  border: 2px solid var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: all 0.2s;
 }
+.btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.btn.secondary {
+  border-color: var(--border);
+  color: var(--muted);
+}
+`;
+    } else {
+      btnCss = `
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background: var(--text);
+  color: var(--bg);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  transition: background-color 0.2s;
+}
+.btn:hover {
+  background: var(--accent);
+}
+.btn.secondary {
+  background: var(--surface);
+  color: var(--text);
+}
+`;
+    }
+
+    if (cardSubVariant === 0) {
+      cardCss = `
 .card-item {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -581,13 +786,48 @@ p { color: var(--muted); }
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
+`;
+    } else if (cardSubVariant === 1) {
+      cardCss = `
+.card-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.03);
+}
+`;
+    } else {
+      cardCss = `
+.card-item {
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  border-top: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 24px;
+}
+`;
+    }
+
+    css += btnCss + cardCss + `
+.badge {
+  background: rgba(var(--accent), 0.1);
+  color: var(--accent);
+  border: 1px solid var(--border);
+}
 .media-placeholder, .media-placeholder-wide, .media-box-fill, .img-box {
   background: var(--border);
   border-radius: 8px;
 }
 `;
   } else if (style === "editorial-warm") {
-    css += `
+    let btnCss = "";
+    let cardCss = "";
+
+    if (btnSubVariant === 0) {
+      btnCss = `
 .btn {
   display: inline-block;
   padding: 12px 24px;
@@ -604,15 +844,84 @@ p { color: var(--muted); }
   color: var(--text);
   border-bottom: 2px solid var(--text);
 }
+`;
+    } else if (btnSubVariant === 1) {
+      btnCss = `
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid var(--text);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.25s;
+}
+.btn:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+.btn.secondary {
+  border-color: var(--border);
+  color: var(--muted);
+}
+`;
+    } else {
+      btnCss = `
+.btn {
+  display: inline-block;
+  padding: 0 0 4px 0;
+  background: transparent;
+  color: var(--text);
+  border-bottom: 2px solid var(--accent);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  font-style: italic;
+  transition: border-color 0.2s;
+}
+.btn:hover {
+  border-color: var(--text);
+}
+.btn.secondary {
+  border-bottom-color: var(--border);
+}
+`;
+    }
+
+    if (cardSubVariant === 0) {
+      cardCss = `
+.card-item {
+  border-top: 2px solid var(--text);
+  padding: 24px 0;
+}
+`;
+    } else if (cardSubVariant === 1) {
+      cardCss = `
+.card-item {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 28px;
+}
+`;
+    } else {
+      cardCss = `
+.card-item {
+  border-left: 2px solid var(--accent);
+  padding: 16px 24px;
+  background: transparent;
+}
+`;
+    }
+
+    css += btnCss + cardCss + `
 .badge {
   border-bottom: 1px solid var(--accent);
   color: var(--text);
   font-style: italic;
   font-family: Georgia, serif;
-}
-.card-item {
-  border-top: 2px solid var(--text);
-  padding: 24px 0;
 }
 .media-placeholder, .media-placeholder-wide, .media-box-fill, .img-box {
   background: var(--surface);
@@ -872,10 +1181,8 @@ function main() {
   const nameRegistry = new Set();
 
   for (let i = 0; i < 1000; i++) {
-    // Category (evenly distributed)
     const category = categories[i % categories.length];
     
-    // Choose prefix and noun
     const prefix = prefixes[Math.floor(i / categoryNouns[category].length) % prefixes.length];
     const noun = categoryNouns[category][i % categoryNouns[category].length];
     
@@ -883,7 +1190,6 @@ function main() {
     let name = baseName;
     let nameCounter = 1;
     
-    // Ensure name uniqueness
     while (nameRegistry.has(name.toLowerCase())) {
       name = `${baseName} ${nameCounter++}`;
     }
@@ -895,15 +1201,14 @@ function main() {
     const style = styles[i % styles.length];
     const font = fontCombos[i % fontCombos.length];
     const palette = makePalette(i);
-    const layoutVariant = i % 5; // Layout variations 0, 1, 2, 3, 4
+    const layoutVariant = i % 5;
 
     const dir = path.join(TEMPLATES_DIR, id);
     fs.mkdirSync(dir, { recursive: true });
 
     const html = getTemplateHtml(category, title, font, layoutVariant);
-    const css = getTemplateCss(style, font, palette, layoutVariant);
+    const css = getTemplateCss(style, font, palette, layoutVariant, i);
     
-    // Write meta.json
     const meta = {
       title: title,
       category: category,

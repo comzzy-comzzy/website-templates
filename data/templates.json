@@ -12,7 +12,8 @@
       "creative"
     ],
     "thumbnail": "templates/photography-aperture/thumbnail.svg",
-    "path": "templates/photography-aperture/index.html"
+    "path": "templates/photography-aperture/index.html",
+    "download": "downloads/photography-aperture.zip"
   },
   {
     "id": "corporate-atlas",
@@ -26,7 +27,8 @@
       "professional"
     ],
     "thumbnail": "templates/corporate-atlas/thumbnail.svg",
-    "path": "templates/corporate-atlas/index.html"
+    "path": "templates/corporate-atlas/index.html",
+    "download": "downloads/corporate-atlas.zip"
   },
   {
     "id": "resume-brightline",
@@ -41,7 +43,8 @@
       "one-page"
     ],
     "thumbnail": "templates/resume-brightline/thumbnail.svg",
-    "path": "templates/resume-brightline/index.html"
+    "path": "templates/resume-brightline/index.html",
+    "download": "downloads/resume-brightline.zip"
   },
   {
     "id": "agency-forge",
@@ -56,7 +59,8 @@
       "showcase"
     ],
     "thumbnail": "templates/agency-forge/thumbnail.svg",
-    "path": "templates/agency-forge/index.html"
+    "path": "templates/agency-forge/index.html",
+    "download": "downloads/agency-forge.zip"
   },
   {
     "id": "nonprofit-haven",
@@ -71,7 +75,8 @@
       "community"
     ],
     "thumbnail": "templates/nonprofit-haven/thumbnail.svg",
-    "path": "templates/nonprofit-haven/index.html"
+    "path": "templates/nonprofit-haven/index.html",
+    "download": "downloads/nonprofit-haven.zip"
   },
   {
     "id": "blog-inkwell",
@@ -86,7 +91,8 @@
       "content"
     ],
     "thumbnail": "templates/blog-inkwell/thumbnail.svg",
-    "path": "templates/blog-inkwell/index.html"
+    "path": "templates/blog-inkwell/index.html",
+    "download": "downloads/blog-inkwell.zip"
   },
   {
     "id": "portfolio-lumen",
@@ -101,7 +107,24 @@
       "personal"
     ],
     "thumbnail": "templates/portfolio-lumen/thumbnail.svg",
-    "path": "templates/portfolio-lumen/index.html"
+    "path": "templates/portfolio-lumen/index.html",
+    "download": "downloads/portfolio-lumen.zip"
+  },
+  {
+    "id": "shop-nook",
+    "title": "Nook Market",
+    "category": "E-commerce",
+    "description": "Warm e-commerce storefront with product grid, category highlights, and cart-ready nav.",
+    "tags": [
+      "ecommerce",
+      "shop",
+      "store",
+      "products",
+      "retail"
+    ],
+    "thumbnail": "templates/shop-nook/thumbnail.svg",
+    "path": "templates/shop-nook/index.html",
+    "download": "downloads/shop-nook.zip"
   },
   {
     "id": "saas-orbit",
@@ -116,7 +139,24 @@
       "app"
     ],
     "thumbnail": "templates/saas-orbit/thumbnail.svg",
-    "path": "templates/saas-orbit/index.html"
+    "path": "templates/saas-orbit/index.html",
+    "download": "downloads/saas-orbit.zip"
+  },
+  {
+    "id": "fitness-pulse",
+    "title": "Pulse Fitness",
+    "category": "Fitness",
+    "description": "High-energy gym site with programs, class schedule, and membership plans.",
+    "tags": [
+      "fitness",
+      "gym",
+      "training",
+      "membership",
+      "health"
+    ],
+    "thumbnail": "templates/fitness-pulse/thumbnail.svg",
+    "path": "templates/fitness-pulse/index.html",
+    "download": "downloads/fitness-pulse.zip"
   },
   {
     "id": "restaurant-savor",
@@ -131,7 +171,8 @@
       "hospitality"
     ],
     "thumbnail": "templates/restaurant-savor/thumbnail.svg",
-    "path": "templates/restaurant-savor/index.html"
+    "path": "templates/restaurant-savor/index.html",
+    "download": "downloads/restaurant-savor.zip"
   },
   {
     "id": "event-summit",
@@ -146,6 +187,23 @@
       "tickets"
     ],
     "thumbnail": "templates/event-summit/thumbnail.svg",
-    "path": "templates/event-summit/index.html"
+    "path": "templates/event-summit/index.html",
+    "download": "downloads/event-summit.zip"
+  },
+  {
+    "id": "travel-wanderly",
+    "title": "Wanderly Travel",
+    "category": "Travel",
+    "description": "Bright travel agency site with destination cards, trip highlights, and booking call-to-action.",
+    "tags": [
+      "travel",
+      "tourism",
+      "destinations",
+      "booking",
+      "adventure"
+    ],
+    "thumbnail": "templates/travel-wanderly/thumbnail.svg",
+    "path": "templates/travel-wanderly/index.html",
+    "download": "downloads/travel-wanderly.zip"
   }
 ]

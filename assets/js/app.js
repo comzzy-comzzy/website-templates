@@ -88,7 +88,7 @@
           <div class="tags">${(t.tags || []).slice(0, 4).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
           <div class="actions">
             <a class="preview" href="${escapeHtml(t.path)}" target="_blank" rel="noopener">Preview</a>
-            <a class="use" href="${escapeHtml(t.path)}" target="_blank" rel="noopener">Use Template</a>
+            <a class="use" href="${escapeHtml(t.download || t.path)}" ${t.download ? "download" : 'target="_blank" rel="noopener"'}>Download ZIP</a>
           </div>
         </div>
       </article>`

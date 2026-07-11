@@ -1,16 +1,20 @@
 #!/usr/bin/env node
 /**
  * Scans templates/*, reads each folder's meta.json, auto-generates a
- * placeholder thumbnail.svg for any template missing one, and writes
- * the aggregated catalog to data/templates.json.
+ * placeholder thumbnail.svg for any template missing one, builds a
+ * downloadable ZIP per template in downloads/, and writes the
+ * aggregated catalog to data/templates.json.
  *
  * Usage: node scripts/generate-manifest.js
+ * Requires python3 (used for ZIP creation via the stdlib zipfile module).
  */
 const fs = require("fs");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
 const ROOT = path.join(__dirname, "..");
 const TEMPLATES_DIR = path.join(ROOT, "templates");
+const DOWNLOADS_DIR = path.join(ROOT, "downloads");
 const OUTPUT_FILE = path.join(ROOT, "data", "templates.json");
 
 const PALETTES = [
@@ -63,6 +67,19 @@ function makeThumbnailSvg(title, category) {
 </svg>`;
 }
 
+function buildZip(id) {
+  fs.mkdirSync(DOWNLOADS_DIR, { recursive: true });
+  const zipPath = path.join(DOWNLOADS_DIR, `${id}.zip`);
+  if (fs.existsSync(zipPath)) fs.unlinkSync(zipPath);
+  const result = spawnSync("python3", ["-m", "zipfile", "-c", zipPath, id], {
+    cwd: TEMPLATES_DIR,
+    stdio: "inherit",
+  });
+  if (result.status !== 0) {
+    throw new Error(`Failed to build ZIP for "${id}" (is python3 installed?)`);
+  }
+}
+
 function main() {
   if (!fs.existsSync(TEMPLATES_DIR)) {
     console.error(`No templates directory found at ${TEMPLATES_DIR}`);
@@ -103,6 +120,8 @@ function main() {
       fs.writeFileSync(thumbPath, makeThumbnailSvg(meta.title, meta.category));
     }
 
+    buildZip(id);
+
     catalog.push({
       id,
       title: meta.title || id,
@@ -111,10 +130,21 @@ function main() {
       tags: Array.isArray(meta.tags) ? meta.tags : [],
       thumbnail: `templates/${id}/thumbnail.svg`,
       path: `templates/${id}/index.html`,
+      download: `downloads/${id}.zip`,
     });
   }
 
   catalog.sort((a, b) => a.title.localeCompare(b.title));
+
+  // Remove ZIPs for templates that no longer exist
+  const validZips = new Set(catalog.map((t) => `${t.id}.zip`));
+  if (fs.existsSync(DOWNLOADS_DIR)) {
+    for (const file of fs.readdirSync(DOWNLOADS_DIR)) {
+      if (file.endsWith(".zip") && !validZips.has(file)) {
+        fs.unlinkSync(path.join(DOWNLOADS_DIR, file));
+      }
+    }
+  }
 
   fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(catalog, null, 2) + "\n");

@@ -7,45 +7,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<header class="nav">
-  <div class="wrap">
-    <div class="logo">Eclipse Treasury</div>
-    <ul>
-      <li><a href="#benefits">Benefits</a></li>
-      <li><a href="#security">Security</a></li>
-      <li><a href="#app">Download</a></li>
-    </ul>
-    <a class="btn primary" href="#contact-footer">Contact</a>
-  </div>
+<body class="has-sidebar">
+<header class="nav sidebar-nav">
+  <div class="logo">Eclipse Treasury</div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a class="btn primary" href="#contact-footer">Contact</a>
 </header>
 
-<section class="hero">
-  <div class="wrap">
-    
-      <div class="badge">Wealth Management</div>
-      <h1>Intelligent investing, <span>simplified.</span></h1>
-      <p>Automated index investing, smart tax-loss harvesting, and dedicated wealth advisors in one app.</p>
-      <a class="btn primary" href="#app">Open an Account</a>
-  </div>
-</section>
-
-
-      <section id="benefits">
-        <div class="wrap">
-          <div class="heading"><h2>Why Choose Us</h2><p>Smart wealth building for modern investors</p></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Low Fees</h3><p>Keep more of your returns with our industry-low 0.25% fee structure.</p></div>
-            <div class="card-item"><h3>Automated Harvest</h3><p>Smart algorithms dynamically offset capital gains taxes.</p></div>
-            <div class="card-item"><h3>Secure Custody</h3><p>SIPC-protected accounts insured up to $500,000.</p></div>
-          </div>
-        </div>
-      </section>
-
-<footer id="contact-footer">
-  <div class="wrap">
+<main class="sidebar-main-content">
+  
+    <section class="hero layout-sidebar-hero">
+      <div class="badge">Vertical Panel Edition</div>
+      <h1>Efficient <span>Finance</span> interfaces.</h1>
+      <p>By moving navigation to a persistent side panel, we maximize space for data-dense grids and visuals.</p>
+      <a class="btn primary" href="#grid-section">See Layout</a>
+    </section>
+  
+    <section id="grid-section" class="section-sidebar">
+      <div class="heading"><h2>Data Density View</h2><p>Spacious visual containers for assets and metrics.</p></div>
+      <div class="grid-3">
+        <div class="card-item shadow-hover"><h3>System Status</h3><p>Operational at 99.98% uptime worldwide.</p></div>
+        <div class="card-item shadow-hover"><h3>Database Nodes</h3><p>Distributed across 8 zones for safety.</p></div>
+        <div class="card-item shadow-hover"><h3>Bandwidth usage</h3><p>Scale dynamically as API load increases.</p></div>
+      </div>
+      <div class="sidebar-large-card"><div class="media-placeholder-wide"></div></div>
+    </section>
+  <footer id="contact-footer">
     <p>&copy; 2026 Eclipse Treasury. Created with Website Templates.</p>
-  </div>
-</footer>
+  </footer>
+</main>
 </body>
 </html>

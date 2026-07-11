@@ -111,471 +111,281 @@ function makePalette(i) {
   }
 }
 
-// Generate the specific HTML and CSS based on category & design style
-function getTemplateContent(category, title, style, font, palette) {
+// Generate unique HTML structure and content by Category and Layout Variant (0 to 4)
+function getTemplateHtml(category, title, font, layoutVariant) {
   let navLinks = "";
-  let heroContent = "";
-  let mainContent = "";
+  let heroSection = "";
+  let contentSections = "";
 
+  // Dynamic Navigation Links
   switch (category) {
     case "Agency":
-      navLinks = `<li><a href="#services">Services</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>`;
-      heroContent = `
-      <div class="badge">Creative Studio</div>
-      <h1>We design digital experiences that <span>matter.</span></h1>
-      <p>Transforming complex ideas into simple, beautiful, and intuitive products for world-class brands.</p>
-      <a class="btn primary" href="#work">Explore Work</a>`;
-      mainContent = `
-      <section id="services">
-        <div class="wrap">
-          <div class="heading"><h2>Our Services</h2><p>Tailored solutions for modern brands</p></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Brand Strategy</h3><p>Defining your unique voice, positioning, and long-term values.</p></div>
-            <div class="card-item"><h3>UX/UI Design</h3><p>Crafting stunning user interfaces with a focus on functional beauty.</p></div>
-            <div class="card-item"><h3>Development</h3><p>Building fast, accessible, and scalable web solutions using modern tech.</p></div>
-          </div>
-        </div>
-      </section>
-      <section id="work">
-        <div class="wrap">
-          <div class="heading"><h2>Featured Work</h2><p>A selection of our latest client collaborations</p></div>
-          <div class="grid-2">
-            <div class="work-card"><div class="media-box"></div><div class="body"><h3>Alpha Platform</h3><p>FinTech Web App</p></div></div>
-            <div class="work-card"><div class="media-box"></div><div class="body"><h3>Solstice Brand</h3><p>Visual Identity</p></div></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Blog":
-      navLinks = `<li><a href="#latest">Latest</a></li>
-      <li><a href="#popular">Popular</a></li>
-      <li><a href="#newsletter">Subscribe</a></li>`;
-      heroContent = `
-      <div class="badge">Insights &amp; Stories</div>
-      <h1>Thoughts on design, <span>technology</span>, and culture.</h1>
-      <p>A collection of articles, essays, and resources updated weekly by our editorial team.</p>
-      <a class="btn primary" href="#latest">Read Latest Articles</a>`;
-      mainContent = `
-      <section id="latest">
-        <div class="wrap">
-          <div class="heading"><h2>Latest Articles</h2></div>
-          <div class="grid-3">
-            <div class="card-item"><div class="media-box small"></div><h3>The Future of Minimal Design</h3><p>Exploring how typography and whitespace define modern interfaces.</p></div>
-            <div class="card-item"><div class="media-box small"></div><h3>Mastering CSS Grid</h3><p>A deep dive into advanced grid patterns and alignment tricks.</p></div>
-            <div class="card-item"><div class="media-box small"></div><h3>AI in Design Workflows</h3><p>How generative AI is changing the speed and scope of product design.</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Corporate":
-      navLinks = `<li><a href="#solutions">Solutions</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#contact">Contact</a></li>`;
-      heroContent = `
-      <div class="badge">Enterprise Solutions</div>
-      <h1>Accelerate your business with <span>intelligent systems.</span></h1>
-      <p>We provide infrastructure, security, and integration consulting for fast-growing global corporations.</p>
-      <a class="btn primary" href="#solutions">See Our Solutions</a>`;
-      mainContent = `
-      <section id="solutions">
-        <div class="wrap">
-          <div class="heading"><h2>Our Solutions</h2><p>Scale efficiently and securely</p></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Cloud Infrastructure</h3><p>Secure migrations and automated cluster orchestration.</p></div>
-            <div class="card-item"><h3>Cybersecurity</h3><p>Comprehensive threat modeling, auditing, and compliance.</p></div>
-            <div class="card-item"><h3>Data Analytics</h3><p>Custom analytics pipelines for real-time business metrics.</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Event":
-      navLinks = `<li><a href="#schedule">Schedule</a></li>
-      <li><a href="#speakers">Speakers</a></li>
-      <li><a href="#tickets">Get Tickets</a></li>`;
-      heroContent = `
-      <div class="badge">Annual Conference &mdash; Oct 15-17</div>
-      <h1>The premier event for <span>creative thinkers.</span></h1>
-      <p>Three days of talks, workshops, and networking with industry leaders in design and technology.</p>
-      <a class="btn primary" href="#tickets">Register Now</a>`;
-      mainContent = `
-      <section id="speakers">
-        <div class="wrap">
-          <div class="heading"><h2>Featured Speakers</h2><p>Hear from industry leaders</p></div>
-          <div class="grid-3">
-            <div class="card-item"><div class="avatar"></div><h3>Dr. Jane Doe</h3><p>AI Architect at FutureTech</p></div>
-            <div class="card-item"><div class="avatar"></div><h3>John Smith</h3><p>Design Lead at CreativeCo</p></div>
-            <div class="card-item"><div class="avatar"></div><h3>Alice Johnson</h3><p>Founder of StartupLabs</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Fitness":
-      navLinks = `<li><a href="#classes">Classes</a></li>
-      <li><a href="#trainers">Trainers</a></li>
-      <li><a href="#pricing">Membership</a></li>`;
-      heroContent = `
-      <div class="badge">Transform Your Body</div>
-      <h1>Push your limits, <span>reach your goals.</span></h1>
-      <p>High-intensity workouts, expert personal trainers, and premium gym amenities to accelerate your progress.</p>
-      <a class="btn primary" href="#classes">View Classes</a>`;
-      mainContent = `
-      <section id="classes">
-        <div class="wrap">
-          <div class="heading"><h2>Class Schedule</h2><p>Workouts that match your schedule</p></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>HIIT Training</h3><p>High-intensity interval sessions designed to burn fat and build stamina.</p></div>
-            <div class="card-item"><h3>Strength &amp; Conditioning</h3><p>Focus on compound lifts, core strength, and muscular endurance.</p></div>
-            <div class="card-item"><h3>Yoga &amp; Mobility</h3><p>Improve flexibility, balance, and mental clarity with expert guides.</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Nonprofit":
-      navLinks = `<li><a href="#mission">Our Mission</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#donate">Donate</a></li>`;
-      heroContent = `
-      <div class="badge">Join the Cause</div>
-      <h1>Building a sustainable <span>future for all.</span></h1>
-      <p>We work with global communities to provide clean water, education, and reforestation programs.</p>
-      <a class="btn primary" href="#donate">Support Our Mission</a>`;
-      mainContent = `
-      <section id="projects">
-        <div class="wrap">
-          <div class="heading"><h2>Active Projects</h2><p>Where your donations go</p></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Clean Water Initiative</h3><p>Installing water filtration units in remote villages.</p></div>
-            <div class="card-item"><h3>Community Schools</h3><p>Building schools and providing learning resources for children.</p></div>
-            <div class="card-item"><h3>Reforestation Project</h3><p>Planting over 100,000 native trees to recover local biomes.</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Photography":
-      navLinks = `<li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#booking">Book Session</a></li>`;
-      heroContent = `
-      <div class="badge">Visual Storytelling</div>
-      <h1>Capturing moments that <span>tell stories.</span></h1>
-      <p>Editorial, portrait, and landscape photography characterized by natural light and minimal styling.</p>
-      <a class="btn primary" href="#portfolio">View Portfolio</a>`;
-      mainContent = `
-      <section id="portfolio">
-        <div class="wrap">
-          <div class="heading"><h2>Featured Work</h2></div>
-          <div class="grid-2">
-            <div class="work-card"><div class="media-box"></div><div class="body"><h3>Urban Architecture</h3><p>Tokyo Series</p></div></div>
-            <div class="work-card"><div class="media-box"></div><div class="body"><h3>Desert Solitude</h3><p>Arizona Series</p></div></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Portfolio":
-      navLinks = `<li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>`;
-      heroContent = `
-      <div class="badge">UX/UI Designer &mdash; Developer</div>
-      <h1>Hi, I'm ${title.split(" ")[0]} &mdash; <span>creating digital interfaces.</span></h1>
-      <p>I build clean, accessible, and fast web experiences with special attention to micro-details.</p>
-      <a class="btn primary" href="#projects">See Projects</a>`;
-      mainContent = `
-      <section id="projects">
-        <div class="wrap">
-          <div class="heading"><h2>Selected Projects</h2></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Design System</h3><p>Built a token-based system for a multi-product enterprise.</p></div>
-            <div class="card-item"><h3>FinTech Dashboard</h3><p>Redesigned financial analytics graphs for better usability.</p></div>
-            <div class="card-item"><h3>Mobile App</h3><p>Created wireframes and interactive prototypes for travel platform.</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Restaurant":
-      navLinks = `<li><a href="#menu">Menu</a></li>
-      <li><a href="#reservations">Reservations</a></li>
-      <li><a href="#about">About</a></li>`;
-      heroContent = `
-      <div class="badge">Modern Bistro</div>
-      <h1>Flavors that feel <span>like home.</span></h1>
-      <p>Fresh, locally-sourced ingredients prepared with care by our kitchen team. Book your table today.</p>
-      <a class="btn primary" href="#reservations">Book a Table</a>`;
-      mainContent = `
-      <section id="menu">
-        <div class="wrap">
-          <div class="heading"><h2>Seasonal Menu</h2><p>Fresh items updated monthly</p></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Pan-Seared Salmon</h3><p>Served with wild asparagus, garlic baby potatoes, and dill oil.</p></div>
-            <div class="card-item"><h3>Truffle Gnocchi</h3><p>Handmade potato gnocchi, black truffle cream, and wild mushrooms.</p></div>
-            <div class="card-item"><h3>Citrus Tart</h3><p>Meyer lemon curd, light toasted meringue, and graham crust.</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Resume":
-      navLinks = `<li><a href="#experience">Experience</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#skills">Skills</a></li>`;
-      heroContent = `
-      <div class="badge">Senior Product Engineer</div>
-      <h1>Building scalable <span>frontends for scale.</span></h1>
-      <p>Expertise in React, CSS architecture, web performance, and technical team leadership.</p>
-      <a class="btn primary" href="mailto:hello@example.com">Contact Me</a>`;
-      mainContent = `
-      <section id="experience">
-        <div class="wrap">
-          <div class="heading"><h2>Work Experience</h2></div>
-          <div class="timeline">
-            <div class="timeline-item"><h4>Lead Frontend Engineer</h4><p>GlobalTech &mdash; 2024 - Present</p><p>Led a team of 6 engineers rebuilding the core web application from scratch, improving bundle sizes by 40%.</p></div>
-            <div class="timeline-item"><h4>Senior UI Developer</h4><p>DesignFlow &mdash; 2022 - 2024</p><p>Designed and built a modular component library used by 30+ internal developer teams.</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "SaaS":
-      navLinks = `<li><a href="#features">Features</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#faq">FAQ</a></li>`;
-      heroContent = `
-      <div class="badge">Next-Gen Workspace</div>
-      <h1>Unify your projects, <span>docs, and team.</span></h1>
-      <p>One workspace for all your planning, task tracking, and team collaboration. Move faster, together.</p>
-      <a class="btn primary" href="#pricing">Get Started Free</a>`;
-      mainContent = `
-      <section id="features">
-        <div class="wrap">
-          <div class="heading"><h2>Powerful Features</h2><p>Designed to supercharge productivity</p></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Task Kanban</h3><p>Organize and prioritize tasks in a visual board format.</p></div>
-            <div class="card-item"><h3>Real-Time Chat</h3><p>Communicate directly inside cards and documents.</p></div>
-            <div class="card-item"><h3>Automations</h3><p>Set custom triggers to automate status updates and alerts.</p></div>
-          </div>
-        </div>
-      </section>
-      <section id="pricing">
-        <div class="wrap">
-          <div class="heading"><h2>Simple Pricing</h2><p>No hidden fees, upgrade anytime</p></div>
-          <div class="grid-3">
-            <div class="pricing-card"><h3>Starter</h3><h4>$0</h4><p>Up to 5 team members</p><a class="btn" href="#">Get Started</a></div>
-            <div class="pricing-card featured"><h3>Pro</h3><h4>$15</h4><p>Unlimited projects &amp; tools</p><a class="btn primary" href="#">Start Trial</a></div>
-            <div class="pricing-card"><h3>Enterprise</h3><h4>Custom</h4><p>Dedicated server &amp; SSO</p><a class="btn" href="#">Contact Us</a></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Shop":
-      navLinks = `<li><a href="#products">Products</a></li>
-      <li><a href="#categories">Categories</a></li>
-      <li><a href="#sale">Sale</a></li>`;
-      heroContent = `
-      <div class="badge">Summer Collection</div>
-      <h1>Minimalist apparel for <span>everyday comfort.</span></h1>
-      <p>High-quality sustainable materials styled into wardrobe essentials that last a lifetime.</p>
-      <a class="btn primary" href="#products">Shop All Products</a>`;
-      mainContent = `
-      <section id="products">
-        <div class="wrap">
-          <div class="heading"><h2>Featured Products</h2></div>
-          <div class="grid-3">
-            <div class="product-card"><div class="media-box"></div><h3>Organic Cotton Tee</h3><span>$32.00</span></div>
-            <div class="product-card"><div class="media-box"></div><h3>Recycled Linen Shirt</h3><span>$68.00</span></div>
-            <div class="product-card"><div class="media-box"></div><h3>Everyday Canvas Tote</h3><span>$24.00</span></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Travel":
-      navLinks = `<li><a href="#destinations">Destinations</a></li>
-      <li><a href="#tours">Tours</a></li>
-      <li><a href="#reviews">Reviews</a></li>`;
-      heroContent = `
-      <div class="badge">Adventure Awaits</div>
-      <h1>Explore the world's <span>hidden paths.</span></h1>
-      <p>Curated boutique travel packages, eco-tours, and adventure guides in untouched natural reserves.</p>
-      <a class="btn primary" href="#destinations">Discover Destinations</a>`;
-      mainContent = `
-      <section id="destinations">
-        <div class="wrap">
-          <div class="heading"><h2>Popular Destinations</h2><p>Voted best spots for 2026</p></div>
-          <div class="grid-3">
-            <div class="card-item"><div class="media-box small"></div><h3>Kyoto Temples</h3><p>Japan &mdash; Cultural exploration</p></div>
-            <div class="card-item"><div class="media-box small"></div><h3>Amalfi Coast</h3><p>Italy &mdash; Ocean views and bistro dining</p></div>
-            <div class="card-item"><div class="media-box small"></div><h3>Patagonia Trails</h3><p>Chile &mdash; Mountain hiking expeditions</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
     case "Consulting":
-      navLinks = `<li><a href="#services">Services</a></li>
-      <li><a href="#cases">Case Studies</a></li>
-      <li><a href="#contact">Contact</a></li>`;
-      heroContent = `
-      <div class="badge">Business Strategy</div>
-      <h1>Transform your business <span>operations &amp; scale.</span></h1>
-      <p>We provide operational consulting, financial planning, and technology advice for companies going public.</p>
-      <a class="btn primary" href="#contact">Free Consultation</a>`;
-      mainContent = `
-      <section id="services">
-        <div class="wrap">
-          <div class="heading"><h2>Our Practices</h2></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Growth Strategy</h3><p>Identify new revenue sources and optimize market positioning.</p></div>
-            <div class="card-item"><h3>Operational Efficiency</h3><p>Automating workflows and trimming operational overhead.</p></div>
-            <div class="card-item"><h3>M&amp;A Integration</h3><p>Guiding smooth consolidations and mergers of technology stacks.</p></div>
-          </div>
-        </div>
-      </section>`;
+      navLinks = `<li><a href="#services">Services</a></li><li><a href="#work">Work</a></li><li><a href="#about">About</a></li>`;
       break;
-
-    case "Crypto":
-      navLinks = `<li><a href="#protocol">Protocol</a></li>
-      <li><a href="#roadmap">Roadmap</a></li>
-      <li><a href="#community">Community</a></li>`;
-      heroContent = `
-      <div class="badge">Decentralized Finance</div>
-      <h1>The liquidity layer for <span>autonomous web3.</span></h1>
-      <p>High-yield liquid staking, sub-second settlement times, and zero-knowledge privacy guarantees.</p>
-      <a class="btn primary" href="#protocol">Launch Application</a>`;
-      mainContent = `
-      <section id="protocol">
-        <div class="wrap">
-          <div class="heading"><h2>Key Features</h2><p>Designed for multi-chain security</p></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Sub-Second Finality</h3><p>Settlement in under 800ms using proof-of-stake consensus.</p></div>
-            <div class="card-item"><h3>Secure Vaults</h3><p>Multi-signature custody contracts audited by top agencies.</p></div>
-            <div class="card-item"><h3>Zero Knowledge</h3><p>Private transfers using advanced zk-SNARK mathematics.</p></div>
-          </div>
-        </div>
-      </section>`;
+    case "Blog":
+      navLinks = `<li><a href="#latest">Latest</a></li><li><a href="#popular">Popular</a></li><li><a href="#newsletter">Subscribe</a></li>`;
       break;
-
-    case "Education":
-      navLinks = `<li><a href="#courses">Courses</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#pricing">Pricing</a></li>`;
-      heroContent = `
-      <div class="badge">Online Academy</div>
-      <h1>Learn advanced coding <span>from scratch.</span></h1>
-      <p>Detailed modules, downloadable resources, and live weekly Q&amp;A calls with professional instructors.</p>
-      <a class="btn primary" href="#courses">Browse Courses</a>`;
-      mainContent = `
-      <section id="courses">
-        <div class="wrap">
-          <div class="heading"><h2>Featured Courses</h2></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Node.js Backend Architecture</h3><p>Build scalable microservices and robust API layers.</p></div>
-            <div class="card-item"><h3>Advanced CSS Layouts</h3><p>Flexbox, Grid, container queries, and beautiful typography.</p></div>
-            <div class="card-item"><h3>Fullstack React &amp; Next.js</h3><p>Server components, routing, and deployment orchestration.</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Fashion":
-      navLinks = `<li><a href="#runway">Runway</a></li>
-      <li><a href="#collection">Collection</a></li>
-      <li><a href="#atelier">Atelier</a></li>`;
-      heroContent = `
-      <div class="badge">Autumn Runway 2026</div>
-      <h1>Re-imagining sustainable <span>luxury tailoring.</span></h1>
-      <p>Minimalist silhouettes, recycled organic fibers, and ethical construction in local design ateliers.</p>
-      <a class="btn primary" href="#collection">Explore Collection</a>`;
-      mainContent = `
-      <section id="collection">
-        <div class="wrap">
-          <div class="heading"><h2>Atelier Collection</h2></div>
-          <div class="grid-2">
-            <div class="work-card"><div class="media-box"></div><div class="body"><h3>Linen Trench Coat</h3><p>Loose fit organic linen</p></div></div>
-            <div class="work-card"><div class="media-box"></div><div class="body"><h3>Pleated Wool Trousers</h3><p>Recycled merino wool blend</p></div></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
+    case "SaaS":
     case "Finance":
-      navLinks = `<li><a href="#benefits">Benefits</a></li>
-      <li><a href="#security">Security</a></li>
-      <li><a href="#app">Download</a></li>`;
-      heroContent = `
-      <div class="badge">Wealth Management</div>
-      <h1>Intelligent investing, <span>simplified.</span></h1>
-      <p>Automated index investing, smart tax-loss harvesting, and dedicated wealth advisors in one app.</p>
-      <a class="btn primary" href="#app">Open an Account</a>`;
-      mainContent = `
-      <section id="benefits">
-        <div class="wrap">
-          <div class="heading"><h2>Why Choose Us</h2><p>Smart wealth building for modern investors</p></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Low Fees</h3><p>Keep more of your returns with our industry-low 0.25% fee structure.</p></div>
-            <div class="card-item"><h3>Automated Harvest</h3><p>Smart algorithms dynamically offset capital gains taxes.</p></div>
-            <div class="card-item"><h3>Secure Custody</h3><p>SIPC-protected accounts insured up to $500,000.</p></div>
-          </div>
-        </div>
-      </section>`;
+    case "Crypto":
+      navLinks = `<li><a href="#features">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#faq">FAQ</a></li>`;
       break;
-
-    case "Medical":
-      navLinks = `<li><a href="#specialties">Specialties</a></li>
-      <li><a href="#doctors">Our Staff</a></li>
-      <li><a href="#booking">Book Appointment</a></li>`;
-      heroContent = `
-      <div class="badge">Modern Clinic</div>
-      <h1>Providing compassionate, <span>advanced healthcare.</span></h1>
-      <p>State-of-the-art diagnostic equipment, resident specialists, and family health programs.</p>
-      <a class="btn primary" href="#booking">Schedule a Visit</a>`;
-      mainContent = `
-      <section id="specialties">
-        <div class="wrap">
-          <div class="heading"><h2>Our Specialties</h2></div>
-          <div class="grid-3">
-            <div class="card-item"><h3>Family Medicine</h3><p>Comprehensive primary care for patients of all ages.</p></div>
-            <div class="card-item"><h3>Cardiology</h3><p>Advanced diagnostic testing, heart health monitoring, and wellness planning.</p></div>
-            <div class="card-item"><h3>Pediatrics</h3><p>Child development check-ups, vaccines, and specialized pediatric care.</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
-
-    case "Real Estate":
-      navLinks = `<li><a href="#listings">Properties</a></li>
-      <li><a href="#agents">Our Agents</a></li>
-      <li><a href="#contact">Contact</a></li>`;
-      heroContent = `
-      <div class="badge">Find Your Home</div>
-      <h1>Modern spaces made for <span>mindful living.</span></h1>
-      <p>Browse our hand-picked collection of modern townhomes, luxury villas, and smart urban apartments.</p>
-      <a class="btn primary" href="#listings">Search Listings</a>`;
-      mainContent = `
-      <section id="listings">
-        <div class="wrap">
-          <div class="heading"><h2>Featured Listings</h2></div>
-          <div class="grid-3">
-            <div class="card-item"><div class="media-box small"></div><h3>Nova Villa</h3><p>$1,450,000 &mdash; 4 Bed, 3 Bath</p></div>
-            <div class="card-item"><div class="media-box small"></div><h3>Lumen Loft</h3><p>$850,000 &mdash; 2 Bed, 2 Bath</p></div>
-            <div class="card-item"><div class="media-box small"></div><h3>Summit Townhome</h3><p>$1,200,000 &mdash; 3 Bed, 2.5 Bath</p></div>
-          </div>
-        </div>
-      </section>`;
-      break;
+    default:
+      navLinks = `<li><a href="#overview">Overview</a></li><li><a href="#details">Details</a></li><li><a href="#contact">Contact</a></li>`;
   }
 
-  const html = `<!doctype html>
+  // Define structured layout variations (0: Centered Classic, 1: Split Screen, 2: Sidebar, 3: Asymmetric, 4: Dashboard/App)
+  if (layoutVariant === 0) {
+    // --- Layout 0: Centered Classic ---
+    heroSection = `
+    <section class="hero layout-centered">
+      <div class="wrap">
+        <div class="badge">Classic Edition</div>
+        <h1>Powering the future of <span>${category.toLowerCase()}</span>.</h1>
+        <p>A classic, reliable approach to designing premium experiences for modern audiences globally.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#overview">Get Started</a>
+          <a class="btn secondary" href="#details">Learn More</a>
+        </div>
+      </div>
+    </section>`;
+
+    contentSections = `
+    <section id="overview" class="section-centered">
+      <div class="wrap">
+        <div class="heading"><h2>Our Pillars</h2><p>Designed for scalability and operational trust.</p></div>
+        <div class="grid-3">
+          <div class="card-item"><h3>01 / Integrity</h3><p>Consistent delivery aligned with business strategy and user research.</p></div>
+          <div class="card-item"><h3>02 / Performance</h3><p>Optimized bundle sizes, quick load times, and fluid page transitions.</p></div>
+          <div class="card-item"><h3>03 / Growth</h3><p>Flexible frameworks designed to adapt as your organization scales.</p></div>
+        </div>
+      </div>
+    </section>
+    <section id="details" class="section-centered details-alt">
+      <div class="wrap">
+        <div class="heading"><h2>Core Details</h2></div>
+        <div class="grid-2">
+          <div class="showcase-card"><div class="media-placeholder"></div><h3>Primary Operations</h3><p>We streamline operational flows for standard systems.</p></div>
+          <div class="showcase-card"><div class="media-placeholder"></div><h3>Secondary Operations</h3><p>Comprehensive dashboard metrics and API integrations.</p></div>
+        </div>
+      </div>
+    </section>`;
+
+  } else if (layoutVariant === 1) {
+    // --- Layout 1: Split Screen Modern ---
+    heroSection = `
+    <section class="hero layout-split">
+      <div class="wrap split-container">
+        <div class="split-col text-col">
+          <div class="badge">Modern Edition</div>
+          <h1>Asymmetric layouts for <span>${category}</span> work.</h1>
+          <p>We blend editorial style with robust modern grids to help you stand out in saturated markets.</p>
+          <a class="btn primary" href="#work">Explore Assets</a>
+        </div>
+        <div class="split-col visual-col">
+          <div class="hero-media-box">
+            <div class="mock-browser">
+              <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+              <div class="url-bar">https://api.${category.toLowerCase()}.io</div>
+              <div class="mock-body"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>`;
+
+    contentSections = `
+    <section id="features" class="section-split">
+      <div class="wrap">
+        <div class="heading"><h2>Core Features</h2></div>
+        <div class="alternating-rows">
+          <div class="alt-row">
+            <div class="text-block"><h3>Automated Workflows</h3><p>Connect your tools and trigger actions automatically upon events.</p></div>
+            <div class="media-block"><div class="media-box-fill"></div></div>
+          </div>
+          <div class="alt-row reverse">
+            <div class="text-block"><h3>Real-Time Insights</h3><p>Monitor metrics directly in your visual console as they happen.</p></div>
+            <div class="media-block"><div class="media-box-fill"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>`;
+
+  } else if (layoutVariant === 2) {
+    // --- Layout 2: Left Sidebar Navigation ---
+    // Note: The structure of Header and Main changes completely for Sidebar!
+    heroSection = `
+    <section class="hero layout-sidebar-hero">
+      <div class="badge">Vertical Panel Edition</div>
+      <h1>Efficient <span>${category}</span> interfaces.</h1>
+      <p>By moving navigation to a persistent side panel, we maximize space for data-dense grids and visuals.</p>
+      <a class="btn primary" href="#grid-section">See Layout</a>
+    </section>`;
+
+    contentSections = `
+    <section id="grid-section" class="section-sidebar">
+      <div class="heading"><h2>Data Density View</h2><p>Spacious visual containers for assets and metrics.</p></div>
+      <div class="grid-3">
+        <div class="card-item shadow-hover"><h3>System Status</h3><p>Operational at 99.98% uptime worldwide.</p></div>
+        <div class="card-item shadow-hover"><h3>Database Nodes</h3><p>Distributed across 8 zones for safety.</p></div>
+        <div class="card-item shadow-hover"><h3>Bandwidth usage</h3><p>Scale dynamically as API load increases.</p></div>
+      </div>
+      <div class="sidebar-large-card"><div class="media-placeholder-wide"></div></div>
+    </section>`;
+
+  } else if (layoutVariant === 3) {
+    // --- Layout 3: Asymmetric Editorial ---
+    heroSection = `
+    <section class="hero layout-asymmetric">
+      <div class="wrap">
+        <div class="editorial-intro">
+          <div class="badge">Editorial Style</div>
+          <h1>Crafting narratives in <span>${category.toLowerCase()} design</span>.</h1>
+        </div>
+        <div class="editorial-body">
+          <p class="large-lead">We believe web design should read like a premium magazine. Open spacing, beautiful serif typography, and asymmetrical content block alignments.</p>
+          <a class="btn primary" href="#stories">Read Our Stories</a>
+        </div>
+      </div>
+    </section>`;
+
+    contentSections = `
+    <section id="stories" class="section-asymmetric">
+      <div class="wrap">
+        <div class="heading"><h2>Featured Chapters</h2></div>
+        <div class="masonry-grid">
+          <div class="masonry-item item-large">
+            <div class="img-box"></div>
+            <div class="meta"><span>Chapter 01</span><h3>The Minimalism Trend</h3></div>
+          </div>
+          <div class="masonry-item item-small">
+            <div class="img-box"></div>
+            <div class="meta"><span>Chapter 02</span><h3>Type Selection</h3></div>
+          </div>
+          <div class="masonry-item item-medium">
+            <div class="img-box"></div>
+            <div class="meta"><span>Chapter 03</span><h3>Balanced Contrast</h3></div>
+          </div>
+        </div>
+      </div>
+    </section>`;
+
+  } else if (layoutVariant === 4) {
+    // --- Layout 4: Dashboard / Modern App Style ---
+    heroSection = `
+    <section class="hero layout-dashboard-hero">
+      <div class="wrap">
+        <div class="badge">Console Dashboard Edition</div>
+        <h1>The central workspace for <span>${category}</span> operators.</h1>
+        <p>A data-rich dashboard console built for developers, designers, and system architects.</p>
+        <div class="console-box">
+          <div class="console-header">
+            <div class="dots"><span class="red"></span><span class="yellow"></span><span class="green"></span></div>
+            <span class="title">terminal &mdash; comzzy@templates</span>
+          </div>
+          <div class="console-body">
+            <p class="cmd">$ agy templates:list --category="${category.toLowerCase()}"</p>
+            <p class="res">Found 50 unique templates matched with layout variants 0-4.</p>
+            <p class="cmd">$ agy deploy --target=production</p>
+            <p class="res success">✓ Deploy completed successfully to website-templates-khaki.vercel.app</p>
+          </div>
+        </div>
+      </div>
+    </section>`;
+
+    contentSections = `
+    <section id="widgets" class="section-dashboard">
+      <div class="wrap">
+        <div class="heading"><h2>Operational Widgets</h2></div>
+        <div class="widgets-grid">
+          <div class="widget-card">
+            <div class="widget-header"><h4>System CPU</h4><span class="status-dot green"></span></div>
+            <div class="widget-metric">12%</div>
+            <p>Optimized workload distribution.</p>
+          </div>
+          <div class="widget-card">
+            <div class="widget-header"><h4>Total Users</h4><span class="status-dot green"></span></div>
+            <div class="widget-metric">48.2k</div>
+            <p>+14% growth this month.</p>
+          </div>
+          <div class="widget-card">
+            <div class="widget-header"><h4>API Latency</h4><span class="status-dot green"></span></div>
+            <div class="widget-metric">42ms</div>
+            <p>Edge response routing enabled.</p>
+          </div>
+        </div>
+      </div>
+    </section>`;
+  }
+
+  // Assemble HTML
+  if (layoutVariant === 2) {
+    // Sidebar layout has different outer structure
+    return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title} &mdash; ${category}</title>
+${font.import}
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="has-sidebar">
+<header class="nav sidebar-nav">
+  <div class="logo">${title}</div>
+  <ul class="nav-links">
+    ${navLinks}
+  </ul>
+  <a class="btn primary" href="#contact-footer">Contact</a>
+</header>
+
+<main class="sidebar-main-content">
+  ${heroSection}
+  ${contentSections}
+  <footer id="contact-footer">
+    <p>&copy; 2026 ${title}. Created with Website Templates.</p>
+  </footer>
+</main>
+</body>
+</html>`;
+  } else if (layoutVariant === 4) {
+    // Floating Nav Layout
+    return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title} &mdash; ${category}</title>
+${font.import}
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="floating-nav-body">
+<header class="nav floating-nav">
+  <div class="wrap float-wrap">
+    <div class="logo">${title}</div>
+    <ul class="nav-links">
+      ${navLinks}
+    </ul>
+    <a class="btn primary" href="#contact-footer">Contact</a>
+  </div>
+</header>
+
+<main>
+  ${heroSection}
+  ${contentSections}
+</main>
+
+<footer id="contact-footer">
+  <div class="wrap">
+    <p>&copy; 2026 ${title}. Created with Website Templates.</p>
+  </div>
+</footer>
+</body>
+</html>`;
+  } else {
+    // Standard and Split layouts
+    return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -585,23 +395,20 @@ ${font.import}
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="nav">
+<header class="nav standard-nav">
   <div class="wrap">
     <div class="logo">${title}</div>
-    <ul>
+    <ul class="nav-links">
       ${navLinks}
     </ul>
     <a class="btn primary" href="#contact-footer">Contact</a>
   </div>
 </header>
 
-<section class="hero">
-  <div class="wrap">
-    ${heroContent}
-  </div>
-</section>
-
-${mainContent}
+<main>
+  ${heroSection}
+  ${contentSections}
+</main>
 
 <footer id="contact-footer">
   <div class="wrap">
@@ -610,9 +417,12 @@ ${mainContent}
 </footer>
 </body>
 </html>`;
+  }
+}
 
-  // Define Layout-specific CSS rules
-  let styleCss = `:root {
+// Generate the specific CSS variables and layout styling rules
+function getTemplateCss(style, font, palette, layoutVariant) {
+  let css = `:root {
   --bg: ${palette.bg};
   --surface: ${palette.surface};
   --text: ${palette.text};
@@ -630,23 +440,30 @@ body {
   line-height: 1.6;
 }
 .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-h1, h2, h3, h4 { font-family: ${font.heading}; font-weight: 700; color: var(--text); }
+h1, h2, h3, h4 { font-family: ${font.heading}; font-weight: 800; color: var(--text); }
 span { color: var(--accent); }
+p { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.heading { margin-bottom: 48px; }
+.heading h2 { font-size: 2rem; margin-bottom: 8px; }
+.heading p { color: var(--muted); }
 `;
 
-  // Append Navigation Styling
+  // Standard elements styling depending on visual design system (Brutalist, Glassmorphism, etc.)
   if (style === "neo-brutalist") {
-    styleCss += `
-header.nav { border-bottom: 3px solid var(--text); background: var(--surface); }
-.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 80px; }
-.nav .logo { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; }
-.nav ul { list-style: none; display: flex; gap: 24px; }
-.nav a { color: var(--text); text-decoration: none; font-weight: 600; }
+    css += `
 .btn {
   display: inline-block;
   padding: 12px 24px;
   background: var(--accent);
-  color: var(--bg);
+  color: #fff;
   text-decoration: none;
   font-weight: 800;
   border: 3px solid var(--text);
@@ -658,91 +475,34 @@ header.nav { border-bottom: 3px solid var(--text); background: var(--surface); }
   transform: translate(-2px, -2px);
   box-shadow: 6px 6px 0 var(--text);
 }
-.hero { padding: 96px 0 80px; }
-.hero h1 { font-size: 3.6rem; line-height: 1.1; margin-bottom: 24px; text-transform: uppercase; }
-.hero p { max-width: 600px; font-size: 1.1rem; color: var(--muted); margin-bottom: 32px; }
+.btn.secondary {
+  background: var(--surface);
+  color: var(--text);
+}
 .badge {
-  display: inline-block;
-  padding: 6px 14px;
   background: var(--accent2);
   color: var(--text);
   border: 2px solid var(--text);
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 18px;
 }
-section { padding: 80px 0; border-top: 3px solid var(--text); }
-.heading { margin-bottom: 48px; }
-.heading h2 { font-size: 2.2rem; text-transform: uppercase; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
 .card-item {
   background: var(--surface);
   border: 3px solid var(--text);
   padding: 28px;
   box-shadow: 4px 4px 0 var(--text);
 }
-.card-item h3 { font-size: 1.4rem; margin-bottom: 12px; text-transform: uppercase; }
-.card-item p { color: var(--muted); }
-.work-card {
-  background: var(--surface);
-  border: 3px solid var(--text);
-  box-shadow: 5px 5px 0 var(--text);
-}
-.work-card .media-box { height: 220px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-bottom: 3px solid var(--text); }
-.work-card .body { padding: 20px; }
-.timeline { border-left: 3px solid var(--text); padding-left: 24px; }
-.timeline-item { margin-bottom: 32px; position: relative; }
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -33px;
-  top: 6px;
-  width: 14px;
-  height: 14px;
-  background: var(--accent);
-  border: 3px solid var(--text);
-  border-radius: 50%;
-}
-.pricing-card {
-  background: var(--surface);
-  border: 3px solid var(--text);
-  padding: 32px;
-  text-align: center;
-  box-shadow: 4px 4px 0 var(--text);
-}
-.pricing-card.featured {
+.card-item h3 { font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase; }
+.media-placeholder, .media-placeholder-wide, .media-box-fill, .img-box {
   background: var(--accent2);
-}
-.pricing-card h3 { font-size: 1.5rem; text-transform: uppercase; }
-.pricing-card h4 { font-size: 2.4rem; margin: 12px 0; }
-.avatar { width: 80px; height: 80px; background: var(--accent); border: 3px solid var(--text); border-radius: 50%; margin-bottom: 16px; }
-footer { padding: 48px 0; border-top: 3px solid var(--text); background: var(--surface); text-align: center; font-weight: bold; }
-@media (max-width: 768px) {
-  .nav ul { display: none; }
-  .grid-3, .grid-2 { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 2.5rem; }
+  border: 3px solid var(--text);
 }
 `;
   } else if (style === "glassmorphism") {
-    styleCss += `
-header.nav {
-  position: sticky;
-  top: 0;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  z-index: 100;
-}
-.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
-.nav .logo { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.5px; }
-.nav ul { list-style: none; display: flex; gap: 28px; }
-.nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; transition: color 0.2s; }
-.nav a:hover { color: var(--text); }
+    css += `
 .btn {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px 22px;
   border-radius: 30px;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   color: #fff;
@@ -753,192 +513,81 @@ header.nav {
   transition: opacity 0.2s;
 }
 .btn:hover { opacity: 0.9; }
-.hero { padding: 120px 0 100px; text-align: center; }
-.hero h1 { font-size: 3.5rem; line-height: 1.15; margin-bottom: 24px; font-weight: 800; letter-spacing: -1px; }
-.hero p { max-width: 620px; font-size: 1.15rem; color: var(--muted); margin: 0 auto 36px; }
+.btn.secondary {
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
 .badge {
-  display: inline-block;
-  padding: 6px 16px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 999px;
   color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-  letter-spacing: 0.5px;
 }
-section { padding: 90px 0; border-top: 1px solid var(--border); }
-.heading { text-align: center; max-width: 600px; margin: 0 auto 56px; }
-.heading h2 { font-size: 2rem; margin-bottom: 12px; }
-.heading p { color: var(--muted); }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
 .card-item {
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 16px;
-  padding: 32px;
+  padding: 30px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s, border-color 0.3s;
 }
 .card-item:hover {
   transform: translateY(-4px);
   border-color: var(--accent);
 }
-.card-item h3 { font-size: 1.3rem; margin-bottom: 12px; }
-.card-item p { color: var(--muted); font-size: 0.95rem; }
-.work-card {
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-}
-.work-card:hover { transform: translateY(-4px); }
-.work-card .media-box { height: 220px; background: linear-gradient(160deg, var(--accent), var(--accent2)); }
-.work-card .body { padding: 24px; }
-.timeline { border-left: 1px dashed var(--border); padding-left: 28px; }
-.timeline-item { margin-bottom: 32px; position: relative; }
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -33px;
-  top: 8px;
-  width: 9px;
-  height: 9px;
-  background: var(--accent);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent);
-}
-.pricing-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 16px;
-  padding: 36px 28px;
-  text-align: center;
-  transition: transform 0.3s;
-}
-.pricing-card:hover { transform: translateY(-4px); }
-.pricing-card.featured {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: var(--accent);
-}
-.pricing-card h3 { font-size: 1.3rem; margin-bottom: 8px; }
-.pricing-card h4 { font-size: 2.8rem; font-weight: 800; margin: 16px 0; }
-.avatar { width: 80px; height: 80px; background: var(--accent); border-radius: 50%; margin: 0 auto 16px; opacity: 0.85; }
-footer { padding: 48px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.9rem; }
-@media (max-width: 768px) {
-  .nav ul { display: none; }
-  .grid-3, .grid-2 { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 2.5rem; }
+.media-placeholder, .media-placeholder-wide, .media-box-fill, .img-box {
+  background: linear-gradient(160deg, var(--accent), var(--accent2));
+  border-radius: 12px;
+  opacity: 0.8;
 }
 `;
   } else if (style === "clean-premium") {
-    styleCss += `
-header.nav { background: var(--surface); border-bottom: 1px solid var(--border); }
-.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
-.nav .logo { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.5px; }
-.nav ul { list-style: none; display: flex; gap: 30px; }
-.nav a { color: var(--muted); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color 0.2s; }
-.nav a:hover { color: var(--text); }
+    css += `
 .btn {
   display: inline-block;
-  padding: 10px 22px;
+  padding: 11px 22px;
   border-radius: 8px;
   background: var(--accent);
   color: #fff;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
-.btn:hover { filter: brightness(1.1); }
-.hero { padding: 110px 0 90px; }
-.hero h1 { font-size: 3.2rem; line-height: 1.2; margin-bottom: 20px; font-weight: 800; }
-.hero p { max-width: 580px; font-size: 1.1rem; color: var(--muted); margin-bottom: 32px; }
+.btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+.btn.secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
 .badge {
-  display: inline-block;
-  padding: 6px 12px;
   background: rgba(var(--accent), 0.1);
   color: var(--accent);
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-bottom: 20px;
+  border: 1px solid var(--border);
 }
-section { padding: 84px 0; border-top: 1px solid var(--border); }
-.heading { margin-bottom: 48px; }
-.heading h2 { font-size: 1.85rem; margin-bottom: 8px; }
-.heading p { color: var(--muted); }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
 .card-item {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+  padding: 28px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.02);
   transition: all 0.3s ease;
 }
 .card-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
-.card-item h3 { font-size: 1.25rem; margin-bottom: 10px; }
-.card-item p { color: var(--muted); font-size: 0.95rem; }
-.work-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.3s;
-}
-.work-card:hover { transform: translateY(-4px); }
-.work-card .media-box { height: 200px; background: linear-gradient(135deg, var(--accent), var(--accent2)); }
-.work-card .body { padding: 20px; }
-.timeline { border-left: 2px solid var(--border); padding-left: 24px; }
-.timeline-item { margin-bottom: 28px; position: relative; }
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -29px;
-  top: 8px;
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
-}
-.pricing-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 32px 24px;
-  text-align: center;
-  transition: transform 0.3s;
-}
-.pricing-card.featured {
-  border-color: var(--accent);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-}
-.pricing-card h3 { font-size: 1.2rem; }
-.pricing-card h4 { font-size: 2.5rem; margin: 12px 0; }
-.avatar { width: 80px; height: 80px; background: var(--border); border-radius: 50%; margin: 0 auto 16px; }
-footer { padding: 48px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.88rem; }
-@media (max-width: 768px) {
-  .nav ul { display: none; }
-  .grid-3, .grid-2 { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 2.3rem; }
+.media-placeholder, .media-placeholder-wide, .media-box-fill, .img-box {
+  background: var(--border);
+  border-radius: 8px;
 }
 `;
   } else if (style === "editorial-warm") {
-    styleCss += `
-header.nav { border-bottom: 1px solid var(--border); }
-.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 80px; }
-.nav .logo { font-size: 1.3rem; font-family: ${font.heading}; font-weight: 700; }
-.nav ul { list-style: none; display: flex; gap: 32px; }
-.nav a { color: var(--text); text-decoration: none; font-size: 0.95rem; font-family: ${font.heading}; }
+    css += `
 .btn {
   display: inline-block;
   padding: 12px 24px;
@@ -946,76 +595,266 @@ header.nav { border-bottom: 1px solid var(--border); }
   color: var(--bg);
   text-decoration: none;
   font-size: 0.9rem;
-  font-family: ${font.heading};
   font-weight: 600;
   transition: opacity 0.2s;
 }
 .btn:hover { opacity: 0.9; }
-.hero { padding: 130px 0 100px; max-width: 800px; }
-.hero h1 { font-size: 3.4rem; font-weight: 600; line-height: 1.15; margin-bottom: 24px; letter-spacing: -0.5px; }
-.hero p { font-size: 1.2rem; color: var(--muted); line-height: 1.7; margin-bottom: 36px; }
+.btn.secondary {
+  background: transparent;
+  color: var(--text);
+  border-bottom: 2px solid var(--text);
+}
 .badge {
-  display: inline-block;
-  padding: 4px 0;
   border-bottom: 1px solid var(--accent);
   color: var(--text);
-  font-size: 0.9rem;
-  font-family: ${font.heading};
   font-style: italic;
-  margin-bottom: 24px;
+  font-family: Georgia, serif;
 }
-section { padding: 96px 0; border-top: 1px solid var(--border); }
-.heading { margin-bottom: 56px; }
-.heading h2 { font-size: 2rem; font-family: ${font.heading}; font-weight: 600; margin-bottom: 12px; }
-.heading p { color: var(--muted); font-size: 1.05rem; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
 .card-item {
   border-top: 2px solid var(--text);
   padding: 24px 0;
 }
-.card-item h3 { font-size: 1.3rem; margin-bottom: 12px; font-weight: 600; }
-.card-item p { color: var(--muted); font-size: 0.98rem; }
-.work-card {
-  border: 1px solid var(--border);
+.media-placeholder, .media-placeholder-wide, .media-box-fill, .img-box {
   background: var(--surface);
-}
-.work-card .media-box { height: 240px; background: linear-gradient(135deg, var(--accent), var(--accent2)); opacity: 0.95; }
-.work-card .body { padding: 24px; }
-.timeline { border-left: 1px solid var(--text); padding-left: 28px; }
-.timeline-item { margin-bottom: 36px; position: relative; }
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -32px;
-  top: 9px;
-  width: 7px;
-  height: 7px;
-  background: var(--text);
-  border-radius: 50%;
-}
-.pricing-card {
   border: 1px solid var(--border);
-  padding: 40px 24px;
-  text-align: center;
-}
-.pricing-card.featured {
-  border-color: var(--text);
-  background: var(--surface);
-}
-.pricing-card h3 { font-size: 1.25rem; font-family: ${font.heading}; }
-.pricing-card h4 { font-size: 2.6rem; font-weight: 600; margin: 16px 0; }
-.avatar { width: 80px; height: 80px; background: var(--border); border-radius: 50%; margin: 0 auto 16px; }
-footer { padding: 64px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.92rem; }
-@media (max-width: 768px) {
-  .nav ul { display: none; }
-  .grid-3, .grid-2 { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 2.4rem; }
 }
 `;
   }
 
-  return { html, css: styleCss };
+  // --- Layout 0: Centered Layout CSS ---
+  if (layoutVariant === 0) {
+    css += `
+.layout-centered { padding: 110px 0 90px; text-align: center; }
+.layout-centered h1 { font-size: 3.5rem; line-height: 1.15; margin-bottom: 20px; }
+.layout-centered p { max-width: 600px; margin: 0 auto 32px; font-size: 1.15rem; }
+.hero-actions { display: flex; gap: 16px; justify-content: center; }
+.section-centered { padding: 84px 0; border-top: 1px solid var(--border); }
+.section-centered.details-alt { background: var(--surface); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.media-placeholder { height: 160px; margin-bottom: 16px; }
+.showcase-card { padding: 20px; background: var(--bg); border: 1px solid var(--border); }
+.showcase-card h3 { margin: 12px 0 8px; }
+
+header.standard-nav { background: var(--surface); border-bottom: 1px solid var(--border); }
+.standard-nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.standard-nav .logo { font-size: 1.3rem; font-weight: 800; }
+.standard-nav ul.nav-links { list-style: none; display: flex; gap: 24px; }
+.standard-nav ul.nav-links a { color: var(--text); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+footer { text-align: center; padding: 48px 0; border-top: 1px solid var(--border); }
+
+@media (max-width: 768px) {
+  .layout-centered h1 { font-size: 2.4rem; }
+  .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
+`;
+  }
+
+  // --- Layout 1: Split Screen CSS ---
+  else if (layoutVariant === 1) {
+    css += `
+.layout-split { padding: 90px 0; }
+.split-container { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+.split-col h1 { font-size: 3.4rem; line-height: 1.15; margin-bottom: 24px; }
+.split-col p { font-size: 1.1rem; margin-bottom: 32px; }
+.hero-media-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+.mock-browser { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--bg); }
+.mock-browser .dots { display: flex; gap: 6px; padding: 10px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.mock-browser .dots span { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.mock-browser .dots span.r { background: #ef4444; }
+.mock-browser .dots span.y { background: #eab308; }
+.mock-browser .dots span.g { background: #10b981; }
+.mock-browser .url-bar { background: var(--bg); padding: 6px 12px; font-size: 0.75rem; text-align: center; border-bottom: 1px solid var(--border); font-family: monospace; color: var(--muted); }
+.mock-browser .mock-body { height: 180px; background: linear-gradient(180deg, var(--surface), var(--bg)); }
+
+.section-split { padding: 90px 0; border-top: 1px solid var(--border); background: var(--surface); }
+.alternating-rows { display: flex; flex-direction: column; gap: 64px; }
+.alt-row { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.alt-row.reverse { direction: rtl; }
+.alt-row.reverse .text-block { direction: ltr; }
+.alt-row h3 { font-size: 1.8rem; margin-bottom: 12px; }
+.media-box-fill { height: 260px; }
+
+header.standard-nav { background: var(--surface); border-bottom: 1px solid var(--border); }
+.standard-nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.standard-nav .logo { font-size: 1.3rem; font-weight: 800; }
+.standard-nav ul.nav-links { list-style: none; display: flex; gap: 24px; }
+.standard-nav ul.nav-links a { color: var(--text); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+footer { text-align: center; padding: 48px 0; border-top: 1px solid var(--border); }
+
+@media (max-width: 768px) {
+  .split-container, .alt-row { grid-template-columns: 1fr; gap: 32px; }
+  .split-col h1 { font-size: 2.3rem; }
+}
+`;
+  }
+
+  // --- Layout 2: Left Sidebar Navigation CSS ---
+  else if (layoutVariant === 2) {
+    css += `
+body.has-sidebar { display: flex; min-height: 100vh; }
+header.sidebar-nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 250px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10;
+}
+header.sidebar-nav .logo { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; margin-bottom: 40px; }
+header.sidebar-nav ul.nav-links { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+header.sidebar-nav ul.nav-links a { color: var(--text); text-decoration: none; font-weight: 600; }
+
+main.sidebar-main-content {
+  margin-left: 250px;
+  flex-grow: 1;
+  padding: 64px 48px;
+  background: var(--bg);
+}
+.layout-sidebar-hero { padding: 60px 0 80px; max-width: 800px; }
+.layout-sidebar-hero h1 { font-size: 3.2rem; line-height: 1.15; margin-bottom: 20px; }
+.layout-sidebar-hero p { font-size: 1.15rem; margin-bottom: 30px; }
+
+.section-sidebar { padding: 60px 0; border-top: 1px solid var(--border); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.sidebar-large-card { margin-top: 36px; }
+.media-placeholder-wide { height: 260px; }
+
+footer { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border); text-align: center; color: var(--muted); }
+
+@media (max-width: 1024px) {
+  body.has-sidebar { flex-direction: column; }
+  header.sidebar-nav { position: relative; width: 100%; border-right: none; border-bottom: 1px solid var(--border); height: auto; padding: 24px; flex-direction: row; align-items: center; }
+  header.sidebar-nav .logo { margin-bottom: 0; }
+  header.sidebar-nav ul.nav-links { flex-direction: row; gap: 16px; }
+  main.sidebar-main-content { margin-left: 0; padding: 24px; }
+}
+@media (max-width: 768px) {
+  header.sidebar-nav ul.nav-links { display: none; }
+  .grid-3 { grid-template-columns: 1fr; }
+}
+`;
+  }
+
+  // --- Layout 3: Asymmetric Editorial CSS ---
+  else if (layoutVariant === 3) {
+    css += `
+.layout-asymmetric { padding: 120px 0 80px; }
+.layout-asymmetric h1 { font-size: 4rem; line-height: 1.05; letter-spacing: -1px; }
+.editorial-intro { max-width: 780px; margin-bottom: 40px; }
+.editorial-body { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: flex-start; }
+.large-lead { font-size: 1.35rem; line-height: 1.6; font-style: italic; }
+
+.section-asymmetric { padding: 90px 0; border-top: 1px solid var(--border); }
+.masonry-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; }
+.masonry-item { display: flex; flex-direction: column; gap: 16px; }
+.masonry-item.item-large .img-box { height: 380px; }
+.masonry-item.item-small .img-box { height: 220px; }
+.masonry-item.item-medium { grid-column: span 2; margin-top: 20px; }
+.masonry-item.item-medium .img-box { height: 280px; }
+.masonry-item .meta span { font-size: 0.8rem; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.masonry-item h3 { font-size: 1.5rem; margin-top: 4px; }
+
+header.standard-nav { background: var(--surface); border-bottom: 1px solid var(--border); }
+.standard-nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.standard-nav .logo { font-size: 1.3rem; font-weight: 800; }
+.standard-nav ul.nav-links { list-style: none; display: flex; gap: 24px; }
+.standard-nav ul.nav-links a { color: var(--text); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+footer { text-align: center; padding: 48px 0; border-top: 1px solid var(--border); }
+
+@media (max-width: 768px) {
+  .layout-asymmetric h1 { font-size: 2.6rem; }
+  .editorial-body, .masonry-grid { grid-template-columns: 1fr; }
+  .masonry-item.item-medium { grid-column: span 1; }
+  .masonry-item.item-large .img-box { height: 260px; }
+}
+`;
+  }
+
+  // --- Layout 4: Dashboard / Modern App CSS ---
+  else if (layoutVariant === 4) {
+    css += `
+body.floating-nav-body { padding-top: 96px; }
+header.floating-nav {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 960px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  z-index: 100;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+.float-wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; width: 100%; padding: 0 20px; }
+.floating-nav .logo { font-size: 1.25rem; font-weight: 800; }
+.floating-nav ul.nav-links { list-style: none; display: flex; gap: 20px; }
+.floating-nav ul.nav-links a { color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+
+.layout-dashboard-hero { padding: 60px 0 80px; text-align: center; }
+.layout-dashboard-hero h1 { font-size: 3.2rem; line-height: 1.15; margin-bottom: 20px; }
+.layout-dashboard-hero p { max-width: 600px; margin: 0 auto 32px; }
+
+.console-box {
+  max-width: 720px;
+  margin: 0 auto;
+  background: #1e1e24;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: left;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+.console-header {
+  background: #16161a;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #2a2a30;
+}
+.console-header .dots { display: flex; gap: 6px; }
+.console-header .dots span { width: 8px; height: 8px; border-radius: 50%; }
+.console-header .dots .red { background: #ef4444; }
+.console-header .dots .yellow { background: #eab308; }
+.console-header .dots .green { background: #10b981; }
+.console-header .title { font-size: 0.75rem; color: #a1a1aa; font-family: monospace; }
+.console-body { padding: 18px; font-family: monospace; font-size: 0.85rem; line-height: 1.6; }
+.console-body p.cmd { color: #f4f4f5; }
+.console-body p.res { color: #a1a1aa; margin-bottom: 8px; }
+.console-body p.success { color: #34d399; }
+
+.section-dashboard { padding: 90px 0; border-top: 1px solid var(--border); background: var(--surface); }
+.widgets-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.widget-card { background: var(--bg); border: 1px solid var(--border); padding: 24px; border-radius: 12px; }
+.widget-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.widget-header h4 { font-size: 0.95rem; text-transform: uppercase; color: var(--muted); }
+.widget-header .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981; }
+.widget-metric { font-size: 2.2rem; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+
+footer { text-align: center; padding: 48px 0; border-top: 1px solid var(--border); }
+
+@media (max-width: 768px) {
+  body.floating-nav-body { padding-top: 120px; }
+  header.floating-nav { top: 10px; width: 95%; }
+  .floating-nav ul.nav-links { display: none; }
+  .layout-dashboard-hero h1 { font-size: 2.3rem; }
+  .widgets-grid { grid-template-columns: 1fr; }
+}
+`;
+  }
+
+  return css;
 }
 
 function cleanId(name) {
@@ -1023,18 +862,17 @@ function cleanId(name) {
 }
 
 function main() {
-  console.log("Starting generation of 500 website templates...");
+  console.log("Starting generation of 1000 structurally unique website templates...");
 
   if (!fs.existsSync(TEMPLATES_DIR)) {
     fs.mkdirSync(TEMPLATES_DIR, { recursive: true });
   }
 
-  // Create list of 500 unique template definitions
   let templatesCount = 0;
   const nameRegistry = new Set();
 
-  for (let i = 0; i < 500; i++) {
-    // Determine category
+  for (let i = 0; i < 1000; i++) {
+    // Category (evenly distributed)
     const category = categories[i % categories.length];
     
     // Choose prefix and noun
@@ -1045,7 +883,7 @@ function main() {
     let name = baseName;
     let nameCounter = 1;
     
-    // De-duplicate name
+    // Ensure name uniqueness
     while (nameRegistry.has(name.toLowerCase())) {
       name = `${baseName} ${nameCounter++}`;
     }
@@ -1057,23 +895,25 @@ function main() {
     const style = styles[i % styles.length];
     const font = fontCombos[i % fontCombos.length];
     const palette = makePalette(i);
+    const layoutVariant = i % 5; // Layout variations 0, 1, 2, 3, 4
 
     const dir = path.join(TEMPLATES_DIR, id);
     fs.mkdirSync(dir, { recursive: true });
 
-    const content = getTemplateContent(category, title, style, font, palette);
+    const html = getTemplateHtml(category, title, font, layoutVariant);
+    const css = getTemplateCss(style, font, palette, layoutVariant);
     
     // Write meta.json
     const meta = {
       title: title,
       category: category,
-      description: `Premium ${style.replace("-", " ")} style template for ${category.toLowerCase()} websites featuring a beautiful color scheme and optimized layout.`,
-      tags: [category.toLowerCase(), style, "figma design", "modern", "responsive", cleanId(prefix)]
+      description: `Premium template for ${category.toLowerCase()} websites. Features a layout type ${layoutVariant} (${["Centered Classic", "Split Screen Modern", "Sidebar Navigation", "Asymmetric Editorial", "Dashboard Operator App"][layoutVariant]}) designed under a ${style.replace("-", " ")} design system.`,
+      tags: [category.toLowerCase(), style, "figma design", "modern", "responsive", `layout-${layoutVariant}`]
     };
 
     fs.writeFileSync(path.join(dir, "meta.json"), JSON.stringify(meta, null, 2) + "\n");
-    fs.writeFileSync(path.join(dir, "index.html"), content.html + "\n");
-    fs.writeFileSync(path.join(dir, "style.css"), content.css + "\n");
+    fs.writeFileSync(path.join(dir, "index.html"), html + "\n");
+    fs.writeFileSync(path.join(dir, "style.css"), css + "\n");
 
     templatesCount++;
   }

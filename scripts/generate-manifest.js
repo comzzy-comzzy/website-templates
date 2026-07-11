@@ -70,7 +70,10 @@ function makeThumbnailSvg(title, category) {
 function buildZip(id) {
   fs.mkdirSync(DOWNLOADS_DIR, { recursive: true });
   const zipPath = path.join(DOWNLOADS_DIR, `${id}.zip`);
-  if (fs.existsSync(zipPath)) fs.unlinkSync(zipPath);
+  if (fs.existsSync(zipPath)) {
+    // Skip rebuilding if it already exists to save time
+    return;
+  }
   const result = spawnSync("python3", ["-m", "zipfile", "-c", zipPath, id], {
     cwd: TEMPLATES_DIR,
     stdio: "inherit",

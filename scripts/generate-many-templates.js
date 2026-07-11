@@ -1068,7 +1068,7 @@ function main() {
       title: title,
       category: category,
       description: `Premium ${style.replace("-", " ")} style template for ${category.toLowerCase()} websites featuring a beautiful color scheme and optimized layout.`,
-      tags: [category.toLowerCase(), style, "modern", "responsive", cleanId(prefix)]
+      tags: [category.toLowerCase(), style, "figma design", "modern", "responsive", cleanId(prefix)]
     };
 
     fs.writeFileSync(path.join(dir, "meta.json"), JSON.stringify(meta, null, 2) + "\n");

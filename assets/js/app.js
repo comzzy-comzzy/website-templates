@@ -38,6 +38,109 @@
     };
   }
 
+  // --- Client-side ZIP (store-only, no compression) -------------------------
+  // Builds a template's ZIP in the browser from its files, so downloads work
+  // on any static host without pre-built archives.
+  const ZIP_MEMBER_FILES = ["index.html", "style.css", "meta.json", "thumbnail.svg"];
+
+  const crcTable = (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+
+  function crc32(bytes) {
+    let c = 0xffffffff;
+    for (let i = 0; i < bytes.length; i++) c = crcTable[(c ^ bytes[i]) & 0xff] ^ (c >>> 8);
+    return (c ^ 0xffffffff) >>> 0;
+  }
+
+  function buildZip(entries) {
+    const encoder = new TextEncoder();
+    const parts = [];
+    const central = [];
+    let offset = 0;
+    let centralSize = 0;
+    for (const { name, bytes } of entries) {
+      const nameBytes = encoder.encode(name);
+      const crc = crc32(bytes);
+      const local = new DataView(new ArrayBuffer(30));
+      local.setUint32(0, 0x04034b50, true);
+      local.setUint16(4, 20, true);
+      local.setUint16(6, 0x0800, true); // UTF-8 names
+      local.setUint32(14, crc, true);
+      local.setUint32(18, bytes.length, true);
+      local.setUint32(22, bytes.length, true);
+      local.setUint16(26, nameBytes.length, true);
+      parts.push(local.buffer, nameBytes, bytes);
+
+      const dir = new DataView(new ArrayBuffer(46));
+      dir.setUint32(0, 0x02014b50, true);
+      dir.setUint16(4, 20, true);
+      dir.setUint16(6, 20, true);
+      dir.setUint16(8, 0x0800, true);
+      dir.setUint32(16, crc, true);
+      dir.setUint32(20, bytes.length, true);
+      dir.setUint32(24, bytes.length, true);
+      dir.setUint16(28, nameBytes.length, true);
+      dir.setUint32(42, offset, true);
+      central.push(dir.buffer, nameBytes);
+      centralSize += 46 + nameBytes.length;
+      offset += 30 + nameBytes.length + bytes.length;
+    }
+    const eocd = new DataView(new ArrayBuffer(22));
+    eocd.setUint32(0, 0x06054b50, true);
+    eocd.setUint16(8, entries.length, true);
+    eocd.setUint16(10, entries.length, true);
+    eocd.setUint32(12, centralSize, true);
+    eocd.setUint32(16, offset, true);
+    return new Blob([...parts, ...central, eocd.buffer], { type: "application/zip" });
+  }
+
+  async function buildTemplateZip(t) {
+    const base = t.path.slice(0, t.path.lastIndexOf("/") + 1);
+    const entries = [];
+    for (const name of ZIP_MEMBER_FILES) {
+      try {
+        const res = await fetch(base + name);
+        if (!res.ok) continue;
+        entries.push({ name: `${t.id}/${name}`, bytes: new Uint8Array(await res.arrayBuffer()) });
+      } catch (_) {
+        /* skip unavailable files */
+      }
+    }
+    if (entries.length === 0) throw new Error("Template files could not be fetched");
+    return buildZip(entries);
+  }
+
+  async function downloadTemplate(t, btn) {
+    const label = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "Preparing…";
+    try {
+      const blob = await buildTemplateZip(t);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${t.id}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    } catch (err) {
+      alert(`Download failed: ${err.message}`);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = label;
+    }
+  }
+  window.__buildTemplateZip = buildTemplateZip; // exposed for testing
+  // --------------------------------------------------------------------------
+
   function applyFilters() {
     const q = state.query.trim().toLowerCase();
     state.filtered = state.all.filter((t) => {
@@ -88,7 +191,7 @@
           <div class="tags">${(t.tags || []).slice(0, 4).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
           <div class="actions">
             <a class="preview" href="${escapeHtml(t.path)}" target="_blank" rel="noopener">Preview</a>
-            <a class="use" href="${escapeHtml(t.download || t.path)}" ${t.download ? "download" : 'target="_blank" rel="noopener"'}>Download ZIP</a>
+            <button class="use download" data-id="${escapeHtml(t.id)}" type="button">Download ZIP</button>
           </div>
         </div>
       </article>`
@@ -150,6 +253,13 @@
       state.category = btn.dataset.category;
       renderPills();
       applyFilters();
+    });
+
+    els.grid.addEventListener("click", (e) => {
+      const btn = e.target.closest("button.download[data-id]");
+      if (!btn) return;
+      const t = state.all.find((x) => x.id === btn.dataset.id);
+      if (t) downloadTemplate(t, btn);
     });
 
     els.pagination.addEventListener("click", (e) => {

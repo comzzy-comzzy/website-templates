@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Templates</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="title">
+      <h1>Website Templates</h1>
+      <span class="count" id="template-count">Loading templates&hellip;</span>
+    </div>
+    <p>Browse the catalog and pick a template to preview or use.</p>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="wrap">
+    <div class="row">
+      <input class="search-input" id="search" type="text" placeholder="Search by name, category, or tag&hellip;">
+      <select class="select" id="sort">
+        <option value="title-asc">Name (A&ndash;Z)</option>
+        <option value="title-desc">Name (Z&ndash;A)</option>
+        <option value="category">Category</option>
+      </select>
+    </div>
+    <div class="category-pills" id="category-pills"></div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <div class="result-info" id="result-info"></div>
+    <div class="grid" id="grid"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">Website Templates &mdash; a growing catalog of free, ready-to-use site templates.</div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>

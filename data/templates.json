@@ -1,0 +1,151 @@
+[
+  {
+    "id": "photography-aperture",
+    "title": "Aperture Photography",
+    "category": "Photography",
+    "description": "Dark, image-forward photography portfolio with a gallery grid and contact section.",
+    "tags": [
+      "photography",
+      "gallery",
+      "portfolio",
+      "dark theme",
+      "creative"
+    ],
+    "thumbnail": "templates/photography-aperture/thumbnail.svg",
+    "path": "templates/photography-aperture/index.html"
+  },
+  {
+    "id": "corporate-atlas",
+    "title": "Atlas Corporate",
+    "category": "Business",
+    "description": "Professional corporate site with services, stats, testimonials, and a CTA banner.",
+    "tags": [
+      "business",
+      "corporate",
+      "services",
+      "professional"
+    ],
+    "thumbnail": "templates/corporate-atlas/thumbnail.svg",
+    "path": "templates/corporate-atlas/index.html"
+  },
+  {
+    "id": "resume-brightline",
+    "title": "Brightline Resume",
+    "category": "Resume",
+    "description": "Sidebar-layout personal resume/CV page with experience timeline and skill bars.",
+    "tags": [
+      "resume",
+      "cv",
+      "personal",
+      "sidebar",
+      "one-page"
+    ],
+    "thumbnail": "templates/resume-brightline/thumbnail.svg",
+    "path": "templates/resume-brightline/index.html"
+  },
+  {
+    "id": "agency-forge",
+    "title": "Forge Agency",
+    "category": "Agency",
+    "description": "Bold creative agency site with services, work showcase, and process steps.",
+    "tags": [
+      "agency",
+      "creative",
+      "studio",
+      "bold",
+      "showcase"
+    ],
+    "thumbnail": "templates/agency-forge/thumbnail.svg",
+    "path": "templates/agency-forge/index.html"
+  },
+  {
+    "id": "nonprofit-haven",
+    "title": "Haven Nonprofit",
+    "category": "Nonprofit",
+    "description": "Mission-driven nonprofit site with impact stats, causes, and a donation call-to-action.",
+    "tags": [
+      "nonprofit",
+      "charity",
+      "donation",
+      "mission",
+      "community"
+    ],
+    "thumbnail": "templates/nonprofit-haven/thumbnail.svg",
+    "path": "templates/nonprofit-haven/index.html"
+  },
+  {
+    "id": "blog-inkwell",
+    "title": "Inkwell Blog",
+    "category": "Blog",
+    "description": "Clean editorial blog layout with a featured post, article list, and newsletter signup.",
+    "tags": [
+      "blog",
+      "editorial",
+      "writing",
+      "newsletter",
+      "content"
+    ],
+    "thumbnail": "templates/blog-inkwell/thumbnail.svg",
+    "path": "templates/blog-inkwell/index.html"
+  },
+  {
+    "id": "portfolio-lumen",
+    "title": "Lumen Portfolio",
+    "category": "Portfolio",
+    "description": "Minimal single-page portfolio with a project grid, skills list, and contact section.",
+    "tags": [
+      "portfolio",
+      "minimal",
+      "creative",
+      "one-page",
+      "personal"
+    ],
+    "thumbnail": "templates/portfolio-lumen/thumbnail.svg",
+    "path": "templates/portfolio-lumen/index.html"
+  },
+  {
+    "id": "saas-orbit",
+    "title": "Orbit SaaS",
+    "category": "SaaS",
+    "description": "Product landing page with feature grid, pricing table, and FAQ section.",
+    "tags": [
+      "saas",
+      "startup",
+      "landing page",
+      "pricing",
+      "app"
+    ],
+    "thumbnail": "templates/saas-orbit/thumbnail.svg",
+    "path": "templates/saas-orbit/index.html"
+  },
+  {
+    "id": "restaurant-savor",
+    "title": "Savor Restaurant",
+    "category": "Restaurant",
+    "description": "Warm restaurant site with menu highlights, chef bio, and reservation call-to-action.",
+    "tags": [
+      "restaurant",
+      "food",
+      "menu",
+      "reservation",
+      "hospitality"
+    ],
+    "thumbnail": "templates/restaurant-savor/thumbnail.svg",
+    "path": "templates/restaurant-savor/index.html"
+  },
+  {
+    "id": "event-summit",
+    "title": "Summit Conference",
+    "category": "Event",
+    "description": "Conference/event landing page with schedule, speakers, and ticket pricing.",
+    "tags": [
+      "event",
+      "conference",
+      "schedule",
+      "speakers",
+      "tickets"
+    ],
+    "thumbnail": "templates/event-summit/thumbnail.svg",
+    "path": "templates/event-summit/index.html"
+  }
+]

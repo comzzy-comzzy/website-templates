@@ -1,0 +1,49 @@
+:root {
+  --bg: #fffdf9;
+  --surface: #f4f1ea;
+  --text: #2b2621;
+  --muted: #7a7268;
+  --accent: #b45309;
+  --border: #e6dfd2;
+  font-size: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Georgia", serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+header.nav { border-bottom: 2px solid var(--text); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 88px; }
+.nav .logo { font-size: 1.6rem; font-weight: 700; }
+.nav ul { list-style: none; display: flex; gap: 26px; font-family: Arial, sans-serif; }
+.nav a { color: var(--text); text-decoration: none; font-size: 0.9rem; }
+.nav a:hover { color: var(--accent); }
+
+.featured { padding: 56px 0; border-bottom: 1px solid var(--border); }
+.featured .tag { color: var(--accent); font-family: Arial, sans-serif; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+.featured h1 { font-size: 2.6rem; margin: 14px 0; }
+.featured .meta { color: var(--muted); font-family: Arial, sans-serif; font-size: 0.85rem; margin-bottom: 18px; }
+.featured p { font-size: 1.1rem; color: #4a443c; max-width: 700px; }
+.featured .cover { height: 260px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), #78350f); margin-bottom: 24px; }
+
+.posts { padding: 48px 0; }
+.post { display: flex; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border); }
+.post .thumb { width: 140px; height: 100px; border-radius: 6px; background: var(--surface); border: 1px solid var(--border); flex-shrink: 0; }
+.post .tag { color: var(--accent); font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; }
+.post h3 { margin: 8px 0 6px; font-size: 1.2rem; }
+.post p { color: var(--muted); font-size: 0.95rem; }
+
+.newsletter { background: var(--surface); border-radius: 10px; padding: 48px 32px; text-align: center; margin: 48px 0; }
+.newsletter h2 { font-size: 1.6rem; margin-bottom: 10px; }
+.newsletter p { color: var(--muted); margin-bottom: 22px; font-family: Arial, sans-serif; }
+.newsletter form { display: flex; gap: 10px; max-width: 380px; margin: 0 auto; }
+.newsletter input { flex: 1; padding: 12px 14px; border: 1px solid var(--border); border-radius: 6px; font-family: Arial, sans-serif; }
+.newsletter button { background: var(--accent); color: #fff; border: none; padding: 12px 20px; border-radius: 6px; font-family: Arial, sans-serif; font-weight: 700; cursor: pointer; }
+
+footer { text-align: center; padding: 32px 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 0.85rem; border-top: 1px solid var(--border); }
+
+@media (max-width: 640px) {
+  .nav ul { display: none; }
+  .post { flex-direction: column; }
+  .post .thumb { width: 100%; height: 140px; }
+  .newsletter form { flex-direction: column; }
+}

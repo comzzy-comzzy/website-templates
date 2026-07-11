@@ -1,0 +1,7 @@
+{
+  "name": "website-templates",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node scripts/generate-many-templates.js && node scripts/generate-manifest.js"
+  }
+}

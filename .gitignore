@@ -1,2 +1,24 @@
 .vercel
 .env*.local
+
+# Ignore all templates except the 13 starter templates
+templates/*
+!templates/agency-forge/
+!templates/blog-inkwell/
+!templates/corporate-atlas/
+!templates/event-summit/
+!templates/fitness-pulse/
+!templates/nonprofit-haven/
+!templates/photography-aperture/
+!templates/portfolio-lumen/
+!templates/restaurant-savor/
+!templates/resume-brightline/
+!templates/saas-orbit/
+!templates/shop-nook/
+!templates/travel-wanderly/
+
+# Ignore pre-built downloads
+downloads/
+
+# Ignore manifest data file (compiled during build)
+data/templates.json

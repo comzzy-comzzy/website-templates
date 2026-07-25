@@ -1,3 +1,8 @@
 {
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/.well-known/agent.json", "destination": "/api/agent-card" },
+    { "source": "/a2a", "destination": "/api/agent" },
+    { "source": "/agent", "destination": "/api/agent" }
+  ]
 }

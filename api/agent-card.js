@@ -17,6 +17,7 @@ module.exports = function handler(req, res) {
     provider: {
       organization: "DesignOnchain",
     },
+    pricing: "Fixed service price: 1 USDT per design task.",
     version: "1.0.0",
     protocolVersion: "0.2.0",
     capabilities: {

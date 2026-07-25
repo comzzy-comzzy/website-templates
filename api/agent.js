@@ -4,8 +4,7 @@ const OFFER = {
   capability:
     "DesignOnchain AI helps users scope and request custom website, brand, and onchain product design deliverables.",
   triggers: ["website design", "landing page", "brand identity", "onchain design", "template", "UI/UX"],
-  pricing:
-    "Free discovery and scoping. Custom design work is quoted per project after scope, timeline, and revision needs are confirmed.",
+  pricing: "Fixed service price: 1 USDT per design task.",
   delivery:
     "Deliverables can include design briefs, website template recommendations, page structure, copy direction, HTML/CSS template files, and revision notes.",
 };
